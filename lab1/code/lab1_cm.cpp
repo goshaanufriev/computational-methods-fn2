@@ -20,17 +20,25 @@ int main()
 
     double* A = createMat(n, n, fin);
     double* b = createMat(n, 1, fin);
-    
-    // double* X = new double[n];
+
+    // Прямой ход метода Гаусса
 
     for (auto j = 0; j < n; ++j)
     {
+        if (j > 0)
+        {
+            for (auto k = j - 1, i = 0; k < n; ++k, ++i)
+            {
+                A[k + n * j] -= A[k + n * (j - 1)] * A[j - 1 + n * j];
+                b[j + i] -= A[j - 1 + n * j] * b[j - 1];
+            }
+        }
         auto maxInd = j + n * j;
         auto maxEl = A[maxInd];
         auto maxRow = j;
         for (auto i = j + 1; i < n; ++i)
         {
-            if (abs(A[j + n * i]) > maxEl)
+            if (std::fabs(A[j + n * i]) > maxEl)
             {
                 maxEl = A[j + n * i];
                 maxInd = j + n * i;
@@ -39,9 +47,9 @@ int main()
         }
         if (maxInd != j + n * j)
         {
-            for (auto i = j, k = 0; i < n; ++j, ++k)
+            for (auto i = j; i < n; ++i)
             {
-                std::swap(A[j + n * i], A[maxInd + k]);
+                std::swap(A[j + n * i], A[j + n * maxRow]);
             }
             std::swap(b[j],b[maxRow]);
         }
@@ -49,6 +57,25 @@ int main()
         {
             A[j + n * i] /= A[j + n * j];
         }
+    }
+
+    // Обратный ход метода Гаусса
+
+    double* X = new double[n];
+    X[n-1] = b[n-1];
+    for (int i = n - 2; i >= 0; --i)
+    {
+        double s = 0;
+        for (auto j = i + 1; j < n; ++j)
+        {
+            s += A[j + n * i]*X[j];
+        }
+        X[i] = b[i] - s;
+    }
+
+    for (auto i = 0; i < n; ++i)
+    {
+        std::cout << X[i] << "\n";
     }
     
     return 0;
