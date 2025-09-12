@@ -1,13 +1,15 @@
 ﻿#include <iostream>
 #include <fstream>
 
+#include "gauss.h"
+
 double* createMat(const int& rows, const int& cols, std::ifstream& fin)
 {
     double* mat = new double[rows * cols];
     for (auto i = 0; i < rows; ++i)
     {
         for (auto j = 0; j < cols; ++j)
-            fin >> mat[j + i * cols];
+            fin >> mat[i * cols + j];
     }
     return mat;
 }
@@ -25,18 +27,10 @@ int main()
 
     for (auto j = 0; j < n; ++j)
     {
-        /*if (j > 0)
-        {
-            for (auto k = j - 1, i = 0; k < n; ++k, ++i)
-            {
-                A[k + n * j] -= A[k + n * (j - 1)] * A[j - 1 + n * j];
-                b[j + i] -= A[j - 1 + n * j] * b[j - 1];
-            }
-        }*/
         auto maxRow = j;
         for (auto i = j + 1; i < n; ++i)
         {
-            if (std::fabs(A[j + n * i]) > std::fabs(A[j + n * maxRow]))
+            if (std::fabs(A[n * i + j]) > std::fabs(A[n * maxRow + j]))
             {
                 maxRow = i;
             }
@@ -47,16 +41,18 @@ int main()
             }
             std::swap(b[j], b[maxRow]);
         }
-        b[j] /= A[j + n * j];
+        double coef = A[j + n * j];
+        b[j] /= coef;
         for (auto i = j; i < n; ++i)
         {
-            A[i + n * j] /= A[j + n * j];
+            A[i + n * j] /= coef;
         }
         for (int i = j + 1; i < n; i++) {
+            double coef = A[i * n + j];
             for (int k = j; k < n; k++) {
-                A[i * n + k] -= A[i * n + j] * A[j * n + k];
+                A[i * n + k] -= coef * A[j * n + k];
             }
-            b[i] -= A[i * n + j] * b[j];
+            b[i] -= coef * b[j];
         }
     }
 
