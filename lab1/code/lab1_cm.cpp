@@ -25,37 +25,38 @@ int main()
 
     for (auto j = 0; j < n; ++j)
     {
-        if (j > 0)
+        /*if (j > 0)
         {
             for (auto k = j - 1, i = 0; k < n; ++k, ++i)
             {
                 A[k + n * j] -= A[k + n * (j - 1)] * A[j - 1 + n * j];
                 b[j + i] -= A[j - 1 + n * j] * b[j - 1];
             }
-        }
-        auto maxInd = j + n * j;
-        auto maxEl = A[maxInd];
+        }*/
         auto maxRow = j;
         for (auto i = j + 1; i < n; ++i)
         {
-            if (std::fabs(A[j + n * i]) > maxEl)
+            if (std::fabs(A[j + n * i]) > std::fabs(A[j + n * maxRow]))
             {
-                maxEl = A[j + n * i];
-                maxInd = j + n * i;
                 maxRow = i;
             }
         }
-        if (maxInd != j + n * j)
-        {
-            for (auto i = j; i < n; ++i)
-            {
-                std::swap(A[j + n * i], A[j + n * maxRow]);
+        if (maxRow != j) {
+            for (int k = j; k < n; k++) {
+                std::swap(A[j * n + k], A[maxRow * n + k]);
             }
-            std::swap(b[j],b[maxRow]);
+            std::swap(b[j], b[maxRow]);
         }
+        b[j] /= A[j + n * j];
         for (auto i = j; i < n; ++i)
         {
-            A[j + n * i] /= A[j + n * j];
+            A[i + n * j] /= A[j + n * j];
+        }
+        for (int i = j + 1; i < n; i++) {
+            for (int k = j; k < n; k++) {
+                A[i * n + k] -= A[i * n + j] * A[j * n + k];
+            }
+            b[i] -= A[i * n + j] * b[j];
         }
     }
 
