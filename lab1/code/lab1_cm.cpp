@@ -1,20 +1,82 @@
-﻿// lab1_cm.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <fstream>
 
-#include <iostream>
+double* createMat(const int& rows, const int& cols, std::ifstream& fin)
+{
+    double* mat = new double[rows * cols];
+    for (auto i = 0; i < rows; ++i)
+    {
+        for (auto j = 0; j < cols; ++j)
+            fin >> mat[j + i * cols];
+    }
+    return mat;
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::ifstream fin("input.txt");
+    int n;
+    fin >> n;
+
+    double* A = createMat(n, n, fin);
+    double* b = createMat(n, 1, fin);
+
+    // Прямой ход метода Гаусса
+
+    for (auto j = 0; j < n; ++j)
+    {
+        if (j > 0)
+        {
+            for (auto k = j - 1, i = 0; k < n; ++k, ++i)
+            {
+                A[k + n * j] -= A[k + n * (j - 1)] * A[j - 1 + n * j];
+                b[j + i] -= A[j - 1 + n * j] * b[j - 1];
+            }
+        }
+        auto maxInd = j + n * j;
+        auto maxEl = A[maxInd];
+        auto maxRow = j;
+        for (auto i = j + 1; i < n; ++i)
+        {
+            if (std::fabs(A[j + n * i]) > maxEl)
+            {
+                maxEl = A[j + n * i];
+                maxInd = j + n * i;
+                maxRow = i;
+            }
+        }
+        if (maxInd != j + n * j)
+        {
+            for (auto i = j; i < n; ++i)
+            {
+                std::swap(A[j + n * i], A[j + n * maxRow]);
+            }
+            std::swap(b[j],b[maxRow]);
+        }
+        for (auto i = j; i < n; ++i)
+        {
+            A[j + n * i] /= A[j + n * j];
+        }
+    }
+
+    // Обратный ход метода Гаусса
+
+    double* X = new double[n];
+    X[n-1] = b[n-1];
+    for (int i = n - 2; i >= 0; --i)
+    {
+        double s = 0;
+        for (auto j = i + 1; j < n; ++j)
+        {
+            s += A[j + n * i]*X[j];
+        }
+        X[i] = b[i] - s;
+    }
+
+    for (auto i = 0; i < n; ++i)
+    {
+        std::cout << X[i] << "\n";
+    }
+    
+    return 0;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
