@@ -4,6 +4,8 @@ double* gauss(const int& n, double*& A, double*& b)
 {
     // Прямой ход метода Гаусса
 
+    int err = 0;
+
     for (auto j = 0; j < n; ++j)
     {
         auto maxRow = j;
@@ -19,6 +21,12 @@ double* gauss(const int& n, double*& A, double*& b)
                 std::swap(A[j * n + k], A[maxRow * n + k]);
             }
             std::swap(b[j], b[maxRow]);
+        }
+        if (std::fabs(A[j * n + j]) < 1E-10)
+        {
+            err = 1;
+            std::cout << "Ошибка! Система вырождена!\n";
+            break;
         }
         double coef = A[j + n * j];
         b[j] /= coef;
@@ -38,15 +46,18 @@ double* gauss(const int& n, double*& A, double*& b)
     // Обратный ход метода Гаусса
 
     double* X = new double[n];
-    X[n - 1] = b[n - 1];
-    for (int i = n - 2; i >= 0; --i)
+    if (err == 0)
     {
-        double s = 0;
-        for (auto j = i + 1; j < n; ++j)
+        X[n - 1] = b[n - 1];
+        for (int i = n - 2; i >= 0; --i)
         {
-            s += A[j + n * i] * X[j];
+            double s = 0;
+            for (auto j = i + 1; j < n; ++j)
+            {
+                s += A[j + n * i] * X[j];
+            }
+            X[i] = b[i] - s;
         }
-        X[i] = b[i] - s;
     }
     return X;
 }
