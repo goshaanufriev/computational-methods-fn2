@@ -1,10 +1,9 @@
 #pragma once
 
+
 double* gauss(const int& n, double*& A, double*& b)
 {
     // Прямой ход метода Гаусса
-
-    int err = 0;
 
     for (auto j = 0; j < n; ++j)
     {
