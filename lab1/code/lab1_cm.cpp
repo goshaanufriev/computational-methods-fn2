@@ -15,7 +15,7 @@ double* createMat(const int& rows, const int& cols, std::ifstream& fin)
     return mat;
 }
 
-double* iMat(const int& n)
+double* idMat(const int& n)
 {
     double* mat = new double[n];
     for (auto i = 0; i < n; ++i)
@@ -31,7 +31,7 @@ double* iMat(const int& n)
     return mat;
 }
 
-double* multMat(const double*& A, const double*& B, const int& n1, const int& m1, const int& n2, const int& m2)
+double*& multMat(const double*& A, double*& B, const int& n1, const int& m1, const int& n2, const int& m2)
 {
     double* mat = new double[n1 * m2];
     for (auto i = 0; i < n1; ++i)
@@ -43,7 +43,22 @@ double* multMat(const double*& A, const double*& B, const int& n1, const int& m1
                 mat[i * m2 + k] += A[i * m1 + j] * B[j * m2 + k];
         }
     }
-    return mat;
+    delete[] B;
+    B = mat;
+    return B;
+}
+
+double* rotMat(int& i, int& j, const double*& A, int& n)
+{
+    double* T = idMat(n);
+    double c = A[i * n + i];
+    double s = A[i * n + j];
+    T[n * i + i] = c / sqrt(c * c + s * s);
+    T[n * i + j] = s / sqrt(c * c + s * s);
+    T[n * j + i] = -s / sqrt(c * c + s * s);
+    T[n * j + j] = c / sqrt(c * c + s * s);
+    return T;
+
 }
 
 int main()
@@ -58,6 +73,15 @@ int main()
     double* b = createMat(n, 1, fin);
 
     //double* C = new double[n * n];
+    for (auto i = 0; i < n; ++i)
+    {
+        for (auto j = i + 1; j < n; ++j)
+        {
+            double* T = rotMat(i, j, A, n);
+            A = multMat(T, A, n, n, n, n);
+            b = multMat(T, b, n, n, n, 1);
+        }
+    }
     double* X = gauss(n, A, b);
 
     for (auto i = 0; i < n; ++i)
