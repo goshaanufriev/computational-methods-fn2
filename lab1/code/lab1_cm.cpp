@@ -33,7 +33,7 @@ double* invMat(const int& n, double*& A)
     return invA;
 }
 
-double cubeNorm(const double*& A, const int& n)
+double cubeNorm(double*& A, const int& n)
 {
     double* sums = new double[n];
     double norm = 0;
@@ -50,7 +50,7 @@ double cubeNorm(const double*& A, const int& n)
     return norm;
 }
 
-double octNorm(const double*& A, const int& n)
+double octNorm(double*& A, const int& n)
 {
     double* sums = new double[n];
     double norm = 0;
@@ -67,6 +67,25 @@ double octNorm(const double*& A, const int& n)
     return norm;
 }
 
+void print(std::ostream& out, double*& A, const int& n, const int& m = 1)
+{
+    for (auto i = 0; i < n; ++i)
+    {
+        if (m == 1)
+        {
+            out << A[i];
+        }
+        else
+        {
+            for (auto j = 0; j < m; ++j)
+            {
+                out << A[i * n + j] << " ";
+            }
+        }
+        out << "\n";
+    }
+}
+
 int main()
 {
     setlocale(LC_ALL, "Russian");
@@ -76,40 +95,32 @@ int main()
     fin >> n;
 
     double* A = createMat(n, n, fin);
-    //double* b = createMat(n, 1, fin);
+    double* b = createMat(n, 1, fin);
+
 
     fin.close();
 
-    //double* X = qr(n, A, b);
-
     double* invA = invMat(n, A);
-    for (auto i = 0; i < n; ++i)
-    {
-        for (auto j = 0; j < n; ++j)
-        {
-            std::cout << invA[i * n + j] << " ";
-        }
-        std::cout << "\n";
-    }
-    multMat(A, invA, n, n, n, n);
-    for (auto i = 0; i < n; ++i)
-    {
-        for (auto j = 0; j < n; ++j)
-        {
-            std::cout << invA[i * n + j] << " ";
-        }
-        std::cout << "\n";
-    }
+    std::cout << "\n";
+    double nA, nInvA;
+    nA = octNorm(A, n);
+    nInvA = octNorm(invA, n);
 
-    std::ofstream fout("output4_mod.txt");
 
-    /*if (err == 0)
-    {
-        for (auto i = 0; i < n; ++i)
-        {
-            fout << X[i] << "\n";
-        }
-    }*/
+    std::ofstream fout("output.txt");
+    fout << "Число обусловленности в октаэдрической норме: " << nA * nInvA << "\n";
+    nA = cubeNorm(A, n);
+    nInvA = cubeNorm(invA, n);
+    fout << "Число обусловленности в кубической норме: " << nA * nInvA << "\n";
+    fout << "\nA^-1*A:\n";
+    multMat(invA, A, n, n, n, n);
+    print(fout, A, n, n);
+
+
+    /*double* X = gauss(n, A, b);
+    if(err == 0)
+        print(fout, X, n);*/
+
 
     fout.close();
     
