@@ -7,23 +7,23 @@ int err{ 0 };
 #include "gauss.h"
 #include "qr.h"
 
-double* invMat(const int& n, double*& A)
+float* invMat(const int& n, float*& A)
 {
-    double* invA = new double[n * n];
-    double* idA = idMat(n);
+    float* invA = new float[n * n];
+    float* idA = idMat(n);
     for (auto j = 0; j < n; ++j)
     {
-        double* copyA = new double[n * n];
+        float* copyA = new float[n * n];
         for (auto i = 0; i < n * n; ++i)
         {
             copyA[i] = A[i];
         }
-        double* ej = new double[n];
+        float* ej = new float[n];
         for (auto i = 0; i < n; ++i)
         {
             ej[i] = idA[i * n + j];
         }
-        double* X = gauss(n, copyA, ej);
+        float* X = gauss(n, copyA, ej);
         for (auto i = 0; i < n; ++i)
         {
             invA[i * n + j] = X[i];
@@ -33,10 +33,10 @@ double* invMat(const int& n, double*& A)
     return invA;
 }
 
-double cubeNorm(double*& A, const int& n)
+float cubeNorm(float*& A, const int& n)
 {
-    double* sums = new double[n];
-    double norm = 0;
+    float* sums = new float[n];
+    float norm = 0;
     for (auto i = 0; i < n; ++i)
     {
         sums[i] = 0;
@@ -50,10 +50,10 @@ double cubeNorm(double*& A, const int& n)
     return norm;
 }
 
-double octNorm(double*& A, const int& n)
+float octNorm(float*& A, const int& n)
 {
-    double* sums = new double[n];
-    double norm = 0;
+    float* sums = new float[n];
+    float norm = 0;
     for (auto j = 0; j < n; ++j)
     {
         sums[j] = 0;
@@ -67,7 +67,7 @@ double octNorm(double*& A, const int& n)
     return norm;
 }
 
-void print(std::ostream& out, double*& A, const int& n, const int& m = 1)
+void print(std::ostream& out, float*& A, const int& n, const int& m = 1)
 {
     for (auto i = 0; i < n; ++i)
     {
@@ -90,24 +90,24 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
 
-    std::ifstream fin("input.txt");
+    std::ifstream fin("input_good.txt");
     int n;
     fin >> n;
 
-    double* A = createMat(n, n, fin);
-    double* b = createMat(n, 1, fin);
+    float* A = createMat(n, n, fin);
+    //float* b = createMat(n, 1, fin);
 
 
     fin.close();
 
-    double* invA = invMat(n, A);
+    float* invA = invMat(n, A);
     std::cout << "\n";
-    double nA, nInvA;
+    float nA, nInvA;
     nA = octNorm(A, n);
     nInvA = octNorm(invA, n);
 
 
-    std::ofstream fout("output.txt");
+    std::ofstream fout("output_good_float.txt");
     fout << "Число обусловленности в октаэдрической норме: " << nA * nInvA << "\n";
     nA = cubeNorm(A, n);
     nInvA = cubeNorm(invA, n);
@@ -117,7 +117,7 @@ int main()
     print(fout, A, n, n);
 
 
-    /*double* X = gauss(n, A, b);
+    /*float* X = gauss(n, A, b);
     if(err == 0)
         print(fout, X, n);*/
 

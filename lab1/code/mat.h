@@ -1,9 +1,9 @@
 #pragma once
 
 
-double* createMat(const int& rows, const int& cols, std::ifstream& fin)
+float* createMat(const int& rows, const int& cols, std::ifstream& fin)
 {
-    double* mat = new double[rows * cols];
+    float* mat = new float[rows * cols];
     for (auto i = 0; i < rows; ++i)
     {
         for (auto j = 0; j < cols; ++j)
@@ -12,9 +12,9 @@ double* createMat(const int& rows, const int& cols, std::ifstream& fin)
     return mat;
 }
 
-double* idMat(const int& n)
+float* idMat(const int& n)
 {
-    double* mat = new double[n * n];
+    float* mat = new float[n * n];
     for (auto i = 0; i < n; ++i)
     {
         for (auto j = 0; j < n; ++j)
@@ -28,9 +28,9 @@ double* idMat(const int& n)
     return mat;
 }
 
-void multMat(double*& A, double*& B, const int& n1, const int& m1, const int& n2, const int& m2)
+void multMat(float*& A, float*& B, const int& n1, const int& m1, const int& n2, const int& m2)
 {
-    double* mat = new double[n1 * m2];
+    float* mat = new float[n1 * m2];
     for (auto i = 0; i < n1; ++i)
     {
         for (auto k = 0; k < m2; ++k)
@@ -45,11 +45,11 @@ void multMat(double*& A, double*& B, const int& n1, const int& m1, const int& n2
     delete[] mat;
 }
 
-double* rotMat(const int& i, const int& j, double*& A, int& n)
+float* rotMat(const int& i, const int& j, float*& A, int& n)
 {
-    double* T = idMat(n);
-    double c = A[i * n + i];
-    double s = A[j * n + i];
+    float* T = idMat(n);
+    float c = A[i * n + i];
+    float s = A[j * n + i];
     if (c * c + s * s != 0)
     {
         T[n * i + i] = c / sqrt(c * c + s * s);
