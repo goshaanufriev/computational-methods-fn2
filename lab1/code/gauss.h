@@ -1,7 +1,7 @@
 #pragma once
 
 
-double* gauss(const int& n, double*& A, double*& b)
+float* gauss(const int& n, float*& A, float*& b)
 {
     // Прямой ход метода Гаусса
 
@@ -27,14 +27,14 @@ double* gauss(const int& n, double*& A, double*& b)
             std::cout << "Ошибка! Система вырождена!\n";
             break;
         }
-        double coef = A[j + n * j];
+        float coef = A[j + n * j];
         b[j] /= coef;
         for (auto i = j; i < n; ++i)
         {
             A[i + n * j] /= coef;
         }
         for (int i = j + 1; i < n; i++) {
-            double coef = A[i * n + j];
+            float coef = A[i * n + j];
             for (int k = j; k < n; k++) {
                 A[i * n + k] -= coef * A[j * n + k];
             }
@@ -44,13 +44,13 @@ double* gauss(const int& n, double*& A, double*& b)
 
     // Обратный ход метода Гаусса
 
-    double* X = new double[n];
+    float* X = new float[n];
     if (err == 0)
     {
         X[n - 1] = b[n - 1];
         for (int i = n - 2; i >= 0; --i)
         {
-            double s = 0;
+            float s = 0;
             for (auto j = i + 1; j < n; ++j)
             {
                 s += A[j + n * i] * X[j];
