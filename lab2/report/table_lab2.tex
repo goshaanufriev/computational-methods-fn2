@@ -1,0 +1,90 @@
+\documentclass[8pt, a4paper, landscape]{article}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[russian]{babel}
+
+\usepackage{amsmath,latexsym,amssymb,amsthm}
+\usepackage{hhline}
+\usepackage{supertabular}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{cite}
+\usepackage{color}
+\usepackage{lscape}
+
+\usepackage[left=2cm,right=2cm,
+top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+
+\frenchspacing
+\righthyphenmin=2
+
+
+\begin{document}
+	\pagestyle{empty} 
+		\begin{table}[h]
+			\begin{flushright}
+				\textbf{Таблица 1.} Результаты исследования итерационных методов $\varepsilon = 10^{-4}$.
+			\end{flushright}
+			\centering			
+			\begin{tabular}{|*{11}{c|}}\hline
+				\multirow[c]{2}{-2mm}{} & & & & &Критерий 1& Критерий 1& Критерий 2 & Критерий 2&Критерий 3 &Критерий 3 \\ 
+				& & & & & & & & & &\\
+				& & & & & & & & & &\\ \hline
+				\multirow[c]{4}{16mm}{\centering Метод}&
+				\multirow[c]{4}{14mm}{\centering $||C||$} &
+				\multirow[c]{4}{16mm}{\centering Оценка числа итераций $k_{est}$} & \multirow[c]{4}{16mm}{\centering Норма ошибки после $k_{est}$ итераций} &
+				\multirow[c]{4}{22mm}{\centering Число итераций, необходимых для получения решения с точностью $\varepsilon$} & 
+				\multirow[c]{4}{15mm}{\centering Норма ошибки} & 
+				\multirow[c]{4}{15mm}{\centering Число итераций} &
+				\multirow[c]{4}{15mm}{\centering Норма ошибки} & 
+				\multirow[c]{4}{15mm}{\centering Число итераций} &
+				\multirow[c]{4}{15mm}{\centering Норма ошибки} &
+				\multirow[c]{4}{15mm}{\centering Число итераций} \\
+				& & & & & & & & & & \\
+				& & & & & & & & & & \\
+				& & & & & & & & & & \\
+				& & & & & & & & & & \\
+				& & & & & & & & & & \\
+				& & & & & & & & & & \\ \hline
+				
+				
+				& & & & & & & & & &\\
+				\multirow[c]{-2}{16mm}{Простой итерации $\tau_{opt} =$} &1.&1&1&1&1&1&1 &1&1&1\\ 
+				& & & & & & & & & &\\
+				& & & & & & & & & &\\ \hline
+				
+				& & & & & & & & & &\\
+				\multirow[c]{3}{16mm}{Простой итерации $\tau = $} &1.&1&1&1&1&1&1 &1&1&1\\ 
+				& & & & & & & & & &\\
+				& & & & & & & & & &\\ \hline
+				
+				& & & & & & & & & &\\
+				\multirow[c]{3}{16mm}{ Якоби} &0.380&13&$2.311\cdot10^{-9}$&1&$5.26\cdot10^{-5}$&8&$5.25\cdot10^{-5}$ &8&$4.273\cdot10^{-5}$&9\\ 
+				& & & & & & & & & &\\
+				& & & & & & & & & &\\ \hline
+				
+				& & & & & & & & & &\\
+				\multirow[c]{3}{16mm}{Зейделя} &0.234&9&$1.160\cdot10^{-9}$&1&0.0001&5&$8.75\cdot10^{-6}$ &6&$4.84\cdot10^{-5}$&6\\ 
+				& & & & & & & & & &\\
+				& & & & & & & & & &\\ \hline
+				
+				& & & & & & & & & &\\
+				\multirow[c]{3}{16mm}{Релаксации $w = 0.5 $}&0.617&25&$2.388\cdot10^{-6}$&1&$4.94\cdot10^{-5}$&20&$9.08\cdot10^{-5}$ &19&$7.25\cdot10^{-5}$&27\\ 
+				& & & & & & & & & &\\
+				& & & & & & & & & &\\ \hline
+				
+				& & & & & & & & & &\\
+				\multirow[c]{3}{16mm}{Релаксации $w = 1.2$} &0.481&17&$2.40\cdot10^{-9}$&1&$6.709\cdot10^{-5}$&10&$6.70\cdot10^{-4}$&10&$7.167\cdot10^{-5}$&12\\ 
+				& & & & & & & & & &\\
+				& & & & & & & & & &\\ \hline
+				
+				
+			\end{tabular}
+		\end{table}
+\end{document}
