@@ -119,10 +119,10 @@ remarks, hyperref, hyperprint]{fn2kursstyle}
 			\item\textbf{По малости невязки}: $\|f-Ax^k\|\leq\varepsilon$
 			
 			Аналогично вопросу №6, полученное решение может удовлетворять неравенству, но будет находиться далеко от истинного решения.
+			\item\textbf{Относительная погрешность невязки: }$\dfrac{\|f-Ax^k\|}{\|f-Ax_0^k\|}\leq\varepsilon$
 			\item\textbf{Для методов простой итерации и Якоби:} $\|x^k-x^{k+1}\|\leq\dfrac{1-\|C\|}{\|C\|}\varepsilon$
-			
-			Этот критерий гарантирует точность в том случае, если $\|C\|\leq\dfrac12$. Он является точным, но требует вычисления матрицы $C$.
 			\item\textbf{Для метода Зейделя:} $\|x^k-x^{k+1}\|\leq\dfrac{1-\|C\|}{\|C_U\|}\varepsilon$.
+			\item\textbf{Самый жёсткий критерий: } $\left\|\dfrac{x^{k+1}-x^k}{|x^k|+\varepsilon_0}\right\|\leq\varepsilon$
 		\end{itemize}
 		
 		
