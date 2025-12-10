@@ -1,0 +1,38 @@
+\documentclass[8pt, a4paper, landscape]{article}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[russian]{babel}
+
+\usepackage{amsmath,latexsym,amssymb,amsthm}
+\usepackage{hhline}
+\usepackage{supertabular}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{cite}
+\usepackage{color}
+\usepackage{lscape}
+
+\usepackage[left=2cm,right=2cm,
+top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+
+\frenchspacing
+\righthyphenmin=2
+
+\begin{document}
+	\begin{tabular}{|c|c|c|}\hline
+		\multirow{2}{3cm}{} & Без сдвига & Со сдвигом\\
+		\hline
+		& Количество итераций & Количество итераций \\
+		\hline
+		Без Хессенберга & & \\
+		\hline
+		Хессенберг & 20 & 6 \\
+		\hline
+	\end{tabular}
+\end{document}
